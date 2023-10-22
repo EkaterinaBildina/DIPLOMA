@@ -14,6 +14,8 @@ public class Textile {
         this.active_qty = active_qty;
     }
 
+
+
     // Геттеры и сеттеры
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
