@@ -1,27 +1,27 @@
-package json;
+package patternMain.json;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpHandler;
 import exeptions.PathParameterException;
-import exeptions.TextileNotFountException;
-import textile.Textile;
-import textileDB.ITextileDB;
+import exeptions.PatternNotFountException;
+import patternMain.pattern.Pattern;
+import patternMain.patternDB.IPatternDB;
 
 import java.io.*;
 import java.util.Arrays;
 
-public class TextileHandler implements HttpHandler  {
-    private final ITextileDB textileDB;
+public class PatternHandler {
+
+    private final IPatternDB patternDB;
+
+    public PatternHandler(IPatternDB patternInput) {
+        this.patternDB = patternInput;
+    }
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    public TextileHandler(ITextileDB textileWrite) {
-        this.textileDB = textileWrite;
-    }
 
-    @Override
-    public void handle(HttpExchange exchange) throws IOException{
+    public void handle(HttpExchange exchange) throws IOException {
         String requestMethod = exchange.getRequestMethod();
         StringBuilder responseBody = new StringBuilder();
         exchange.getResponseHeaders().set("Content-Type", "application/json");
@@ -32,21 +32,21 @@ public class TextileHandler implements HttpHandler  {
 
         switch (requestMethod) {
             case "GET":
-                responseBody.append(objectMapper.writeValueAsString(textileDB.getTextile()));
+                responseBody.append(objectMapper.writeValueAsString(patternDB.getPattern()));
                 exchange.sendResponseHeaders(200, responseBody.length());
                 break;
             case "POST":
                 try {
                     if (pathElements.length == 3) {
-                        Textile newTextile = textileDB.addTextile(pathElements[4]);
-                        responseBody.append(objectMapper.writeValueAsString(newTextile));
+                        Pattern newPattern = patternDB.addPattern(pathElements[5]);
+                        responseBody.append(objectMapper.writeValueAsString(newPattern));
                         exchange.sendResponseHeaders(201, responseBody.length());
-                    } else if (pathElements.length == 4) {
+                    } else if (pathElements.length == 5) {
                         String bodyString = getRequestBodyString(exchange.getRequestBody());
-                        textileDB.addAll(Arrays.asList(objectMapper.readValue(bodyString, Textile[].class)));
+                        patternDB.addAll(Arrays.asList(objectMapper.readValue(bodyString, Pattern[].class)));
                         exchange.sendResponseHeaders(200, responseBody.length());
                     } else {
-                        throw new PathParameterException("Textile name is not found in Data Base");
+                        throw new PathParameterException("Pattern name is not found in Data Base");
                     }
                 } catch (PathParameterException e) {
                     responseBody.append("{\"error\":\"method POST : ").append(e.getMessage()).append("\"}");
@@ -60,12 +60,12 @@ public class TextileHandler implements HttpHandler  {
                 try {
                     if (pathElements.length == 10) {
                         int id = Integer.parseInt(pathElements[2]);
-                        responseBody.append(objectMapper.writeValueAsString(textileDB.deleteUser(id)));
+                        responseBody.append(objectMapper.writeValueAsString(patternDB.deletePattern(id)));
                         exchange.sendResponseHeaders(200, responseBody.length());
                     } else {
-                        throw new PathParameterException("Textile name is not found in DataBase");
+                        throw new PathParameterException("Pattern id is not found in DataBase");
                     }
-                } catch (TextileNotFountException e) {
+                } catch (PatternNotFountException e) {
                     responseBody.append("{\"error\":\"method DELETE : ").append(e.getMessage()).append("\"}");
                     exchange.sendResponseHeaders(404, responseBody.length());
                 } catch (Exception e) {
@@ -85,7 +85,6 @@ public class TextileHandler implements HttpHandler  {
             os.write(responseBody.toString().getBytes());
         }
     }
-
     private String getRequestBodyString(InputStream inputStream) throws IOException {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
             StringBuilder result = new StringBuilder();

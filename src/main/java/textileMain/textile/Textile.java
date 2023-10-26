@@ -1,4 +1,4 @@
-package textile;
+package textileMain.textile;
 
 public class Textile {
     private int id;

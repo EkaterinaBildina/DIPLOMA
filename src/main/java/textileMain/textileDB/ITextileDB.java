@@ -1,7 +1,7 @@
-package textileDB;
+package textileMain.textileDB;
 
 import exeptions.TextileNotFountException;
-import textile.Textile;
+import textileMain.textile.Textile;
 
 import java.util.List;
 
