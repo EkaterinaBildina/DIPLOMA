@@ -6,8 +6,10 @@ import textileMain.textile.Textile;
 import java.util.List;
 
 public interface ITextileDB {
-    Textile addTextile(String TextileNew);
-    Textile deleteUser(int userId) throws TextileNotFountException;
+    Textile addTextile(int id, String TextileNew, double qty);
+    Textile deleteTextile(int id) throws TextileNotFountException;
     List<Textile> getTextile();
     void addAll(List<Textile> listTextile);
+
+
 }

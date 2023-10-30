@@ -1,11 +1,13 @@
 package patternMain.pattern;
 
+
+// класс представляет раздел Выкройки
 public class Pattern {
 
-    private int id;
-    private String name;
-    private int size;
-    private int height;
+    private int id; // id выкройки
+    private String name; // название
+    private int size; // параметр размер
+    private int height; // параметр рост
 
     // Конструктор по умолчанию, необходим для Jackson
     public Pattern() {}

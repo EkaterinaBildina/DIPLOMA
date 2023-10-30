@@ -11,6 +11,8 @@ import textileMain.textileDB.ITextileDB;
 import java.io.*;
 import java.util.Arrays;
 
+
+// класс использует встроенный обработчик HttpHandler для генерации содержимого ответа на HTTP-запрос.
 public class TextileHandler implements HttpHandler  {
     private final ITextileDB textileDB;
 
@@ -24,6 +26,7 @@ public class TextileHandler implements HttpHandler  {
     public void handle(HttpExchange exchange) throws IOException{
         String requestMethod = exchange.getRequestMethod();
         StringBuilder responseBody = new StringBuilder();
+
         exchange.getResponseHeaders().set("Content-Type", "application/json");
         exchange.getResponseHeaders().set("Access-Control-Allow-Origin", "*");
         exchange.getResponseHeaders().set("Access-Control-Allow-Methods", "DELETE, POST, GET, OPTIONS");
@@ -38,7 +41,7 @@ public class TextileHandler implements HttpHandler  {
             case "POST":
                 try {
                     if (pathElements.length == 3) {
-                        Textile newTextile = textileDB.addTextile(pathElements[4]);
+                        Textile newTextile = textileDB.addTextile(0, pathElements[4], 0);
                         responseBody.append(objectMapper.writeValueAsString(newTextile));
                         exchange.sendResponseHeaders(201, responseBody.length());
                     } else if (pathElements.length == 4) {
@@ -60,7 +63,7 @@ public class TextileHandler implements HttpHandler  {
                 try {
                     if (pathElements.length == 10) {
                         int id = Integer.parseInt(pathElements[2]);
-                        responseBody.append(objectMapper.writeValueAsString(textileDB.deleteUser(id)));
+                        responseBody.append(objectMapper.writeValueAsString(textileDB.deleteTextile(id)));
                         exchange.sendResponseHeaders(200, responseBody.length());
                     } else {
                         throw new PathParameterException("Textile name is not found in DataBase");

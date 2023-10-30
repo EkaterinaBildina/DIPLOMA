@@ -1,13 +1,16 @@
 package textileMain.textile;
 
+// Класс, который представляет раздел Ткани
 public class Textile {
-    private int id;
-    private String name;
-    private double active_qty;
+    private int id; // ID ткани
+    private String name; // название
+    private double active_qty; // количество ткани в наличии
 
     // Конструктор по умолчанию, необходим для Jackson
     public Textile() {}
 
+
+    // конструктор параметров Тканей
     public Textile(int id, String name, double active_qty) {
         this.id = id;
         this.name = name;
@@ -23,6 +26,8 @@ public class Textile {
     public void setName(String name) { this.name = name; }
     public double getActive_qty() { return active_qty; }
     public void setActive_qty(double active_qty) { this.active_qty = active_qty; }
+
+
 
     @Override
     public String toString() {

@@ -8,9 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
+// класс отвечает за Базу Данных выкроек
+// имплементируе интерфейс БД Выкроек
 public class PatternDB implements IPatternDB {
-    private final List<Pattern> patterns = new ArrayList<>();
-    private final AtomicInteger id_add = new AtomicInteger(1);
+    private final List<Pattern> patterns = new ArrayList<>(); // список выкроек
+    private final AtomicInteger id_add = new AtomicInteger(1); // добавление нового id
 
     @Override
     public Pattern addPattern(String name) {
