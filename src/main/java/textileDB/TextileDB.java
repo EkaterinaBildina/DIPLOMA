@@ -16,13 +16,13 @@ public class TextileDB implements ITextileDB {
     public Textile addTextile(String name) {
         int id = id_add.getAndIncrement();
         double active_qty = 0;
-        Textile newTextile = new Textile(id, name, active_qty);
+        Textile newTextile = new Textile(name, active_qty);
         textile.add(newTextile);
         return newTextile;
     }
 
     @Override
-    public Textile deleteUser(int id) throws TextileNotFountException {
+    public Textile deleteTextile(int id) throws TextileNotFountException {
         for (int i = 0; i < textile.size(); i++) {
             if (textile.get(i).getId() == id) {
                 return textile.remove(i);

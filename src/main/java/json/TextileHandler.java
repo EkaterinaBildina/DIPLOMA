@@ -60,7 +60,7 @@ public class TextileHandler implements HttpHandler  {
                 try {
                     if (pathElements.length == 10) {
                         int id = Integer.parseInt(pathElements[2]);
-                        responseBody.append(objectMapper.writeValueAsString(textileDB.deleteUser(id)));
+                        responseBody.append(objectMapper.writeValueAsString(textileDB.deleteTextile(id)));
                         exchange.sendResponseHeaders(200, responseBody.length());
                     } else {
                         throw new PathParameterException("Textile name is not found in DataBase");

@@ -9,7 +9,7 @@ public class TextileDemo {
         ObjectMapper objectMapper = new ObjectMapper();
 
         // 1. Создаем новый объект Textile
-        Textile textile = new Textile(1, "Россыпь", 2.8);
+        Textile textile = new Textile("Россыпь", 2.8);
 
         // 2. Сериализуем объект Book в строку JSON
         String jsonString = objectMapper.writeValueAsString(textile);
