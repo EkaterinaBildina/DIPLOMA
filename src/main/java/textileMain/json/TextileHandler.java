@@ -1,29 +1,32 @@
-package json;
+package textileMain.json;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import exeptions.PathParameterException;
 import exeptions.TextileNotFountException;
-import textile.Textile;
-import textileDB.ITextileDB;
+import textileMain.textile.Textile;
+import textileMain.textileDB.ITextileDB;
 
 import java.io.*;
 import java.util.Arrays;
 
+
+// класс использует встроенный обработчик HttpHandler для генерации содержимого ответа на HTTP-запрос.
 public class TextileHandler implements HttpHandler  {
     private final ITextileDB textileDB;
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    public TextileHandler(ITextileDB textileWrite) {
-        this.textileDB = textileWrite;
+    public TextileHandler(ITextileDB textileInput) {
+        this.textileDB = textileInput;
     }
 
     @Override
     public void handle(HttpExchange exchange) throws IOException{
         String requestMethod = exchange.getRequestMethod();
         StringBuilder responseBody = new StringBuilder();
+
         exchange.getResponseHeaders().set("Content-Type", "application/json");
         exchange.getResponseHeaders().set("Access-Control-Allow-Origin", "*");
         exchange.getResponseHeaders().set("Access-Control-Allow-Methods", "DELETE, POST, GET, OPTIONS");
@@ -38,7 +41,7 @@ public class TextileHandler implements HttpHandler  {
             case "POST":
                 try {
                     if (pathElements.length == 3) {
-                        Textile newTextile = textileDB.addTextile(pathElements[4]);
+                        Textile newTextile = textileDB.addTextile(0, pathElements[4], 0);
                         responseBody.append(objectMapper.writeValueAsString(newTextile));
                         exchange.sendResponseHeaders(201, responseBody.length());
                     } else if (pathElements.length == 4) {

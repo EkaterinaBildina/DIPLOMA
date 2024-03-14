@@ -1,7 +1,7 @@
-package json;
+package textileMain.json;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import textile.Textile;
+import textileMain.textile.Textile;
 
 public class TextileDemo {
     public static void main(String[] args) throws Exception {
