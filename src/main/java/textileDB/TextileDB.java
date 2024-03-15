@@ -22,6 +22,11 @@ public class TextileDB implements ITextileDB {
     }
 
     @Override
+    public Textile deleteUser(int userId) throws TextileNotFountException {
+        return null;
+    }
+
+    @Override
     public Textile deleteTextile(int id) throws TextileNotFountException {
         for (int i = 0; i < textile.size(); i++) {
             if (textile.get(i).getId() == id) {
