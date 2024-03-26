@@ -11,6 +11,8 @@
     <modules>
         <module>chat-client</module>
         <module>chat-admin</module>
+        <module>webapp</module>
+
     </modules>
 
     <dependencies>
@@ -83,14 +85,12 @@
             <version>3.2.3</version>
         </dependency>
 
+        <!-- Spring MVC -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
             <version>6.1.5</version>
         </dependency>
-
-
-
 
     </dependencies>
 
